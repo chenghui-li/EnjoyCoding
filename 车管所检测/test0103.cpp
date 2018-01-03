@@ -149,7 +149,7 @@ void doit() {
 						continue;
 					}
 					else if (buff1.sta[(*ite).a[k]] == 0 && buff1.sta[(*ite).next] == 0) {	//移到目标位
-						buff1.sta[(*ite).a[(*ite).i]] = 0;
+						buff1.sta[(*ite).now] = 0;
 						(*ite).tim = 0;
 						(*ite).flag = 0;
 						(*ite).i = k;
@@ -167,7 +167,9 @@ void doit() {
 						buff1.sta[(*ite).now] = 0;
 						(*ite).tim = 0;
 						(*ite).flag = 1;	//占位
-						if ((*ite).a[(*ite).next] != 0)
+						if((*ite).now == (*ite).a[(*ite).i])
+							(*ite).i += 1;
+						if ((*ite).next != 0)
 							buff1.sta[(*ite).next] = 1;
 						(*ite).now = (*ite).next;
 						(*ite).next = (*ite).now + 1;
@@ -185,12 +187,13 @@ void doit() {
 			}
 			for (ite = l2.begin(); ite != l2.end();) {
 				//		if (l2.front().a[(*ite).i] != 0) {
+				int k;
+				if ((*ite).now == (*ite).a[(*ite).i])
+					k = (*ite).i + 1;	//目标位的索引
+				else
+					k = (*ite).i;
 				if ((*ite).tim >= everyTime[(*ite).a[(*ite).i]] || (*ite).now != (*ite).a[(*ite).i]) {
-					int k;
-					if ((*ite).now == (*ite).a[(*ite).i])
-						k = (*ite).i + 1;	//目标位的索引
-					else
-						k = (*ite).i;
+					
 					if (buff2.sta[(*ite).a[k]] == 1 && buff2.sta[(*ite).next] == 1) {
 						(*ite).flag = 1;
 						ite++;
@@ -215,7 +218,9 @@ void doit() {
 						buff2.sta[(*ite).now] = 0;
 						(*ite).tim = 0;
 						(*ite).flag = 1;	//占位
-						if ((*ite).a[(*ite).next] != 0)
+						if((*ite).now == (*ite).a[(*ite).i])
+							(*ite).i += 1;
+						if ((*ite).next != 0)
 							buff2.sta[(*ite).next] = 1;
 						(*ite).now = (*ite).next;
 						(*ite).next = (*ite).now + 1;
